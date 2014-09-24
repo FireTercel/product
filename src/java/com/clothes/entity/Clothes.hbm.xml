@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.clothes.entity.Clothes" table="CLOTHES">
+		<id name="id" type="java.lang.String">
+			<column name="ID" precision="8" scale="0" />
+			<generator class="uuid">
+			</generator>
+		</id>
+		<property name="cloth_name" type="java.lang.String">
+			<column name="CLOTH_NAME" length="25" not-null="true" />
+		</property>
+		<property name="price" type="java.lang.Double">
+			<column name="PRICE" length="20" />
+		</property>
+		<property name="description" type="java.lang.String">
+			<column name="DESCRIPTION" length="250" />
+		</property>
+		<property name="commant" type="java.lang.String">
+			<column name="COMMANT" length="250" not-null="true" />
+		</property>
+		<property name="upload_time" type="java.util.Date">
+			<column name="UPLOAD_TIME" not-null="true" />
+		</property>
+		<property name="usable" type="java.lang.String">
+			<column name="USABLE" length="5" />
+		</property>
+		<set name="clothimage" cascade="save-update">
+			<key column="clothes_id"></key>
+			<one-to-many class="com.clothes.entity.ClothImage"/>
+		</set>
+		
+	</class>
+	
+</hibernate-mapping>
