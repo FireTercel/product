@@ -1,6 +1,8 @@
 package com.clothes.controller;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.clothes.entity.Person;
+import com.clothes.util.SystemTimeUtil;
+import com.mysql.jdbc.Driver;
 
 /** 
  * SpringMVC中的文件上传 
@@ -23,7 +27,7 @@ import com.clothes.entity.Person;
  * @see 第二步：在####-servlet.xml中配置MultipartResolver处理器。可在此加入对上传文件的属性限制 
  * @see 第三步：在Controller的方法中添加MultipartFile参数。该参数用于接收表单中file组件的内容 
  * @see 第四步：编写前台表单。注意enctype="multipart/form-data"以及<input type="file" name="****"/> 
- * @author 宏宇 
+ * @author 唐东宇 
  * @create May 12, 2012 1:26:21 AM 
  */  
 @Controller  
@@ -52,7 +56,7 @@ public class PersonController {
 	}
 	
 	@RequestMapping(value="/add", method=RequestMethod.POST)  
-    public String addUser(Person person, @RequestParam MultipartFile[] myfiles, HttpServletRequest request) throws IOException{  
+    public String addPerson(Person person, @RequestParam MultipartFile[] myfiles, HttpServletRequest request) throws IOException{  
         //如果只是上传一个文件，则只需要MultipartFile类型接收文件即可，而且无需显式指定@RequestParam注解  
         //如果想上传多个文件，那么这里就要用MultipartFile[]类型来接收文件，并且还要指定@RequestParam注解  
         //并且上传多个文件时，前台表单中的所有<input type="file"/>的name都应该是myfiles，否则参数里的myfiles无法获取到所有上传的文件  
@@ -66,13 +70,45 @@ public class PersonController {
                 System.out.println("文件原名: " + myfile.getOriginalFilename());  
                 System.out.println("========================================");  
                 //如果用的是Tomcat服务器，则文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\WEB-INF\\upload\\文件夹中  
-                String realPath = request.getSession().getServletContext().getRealPath("/WEB-INF/upload");  
+                String realPath = request.getSession().getServletContext().getRealPath("/upload");  
                 //这里不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉，我是看它的源码才知道的  
-                //FileUtils.copyInputStreamToFile(myfile.getInputStream(), new File(realPath, myfile.getOriginalFilename()));  
+                FileUtils.copyInputStreamToFile(myfile.getInputStream(), new File(realPath, myfile.getOriginalFilename()));  
             }  
         }  
         persons.put(person.getUsername(), person);  
-        return "redirect:/user/list";  
-    }  
+        return "redirect:/user/list.do";  
+    }
+	@RequestMapping(value="/addpic",method=RequestMethod.POST)
+	public String addPerson(Person person,@RequestParam MultipartFile[] myfiles,HttpServletRequest request,Driver driver) throws IOException{
+		int pic_num=1;
+		for(MultipartFile myfile:myfiles){
+			String systemTime=SystemTimeUtil.getSystemTimePic();
+			String username=person.getUsername();
+			
+			if(myfile.isEmpty()){
+				System.out.println("文件未上传！");
+			}else{
+				
+				String pic_type=myfile.getContentType();
+				String file_ture_name=username;
+				if(pic_type.equals("image/jpeg")){
+	                 file_ture_name =   (file_ture_name+pic_num).concat(".jpg");
+	             } else if (pic_type.equals("image/png")){
+	                 file_ture_name = (file_ture_name+pic_num).concat(".png");
+	             } else if(pic_type.equals("image/bmp")){
+	                 file_ture_name =  (file_ture_name+pic_num).concat(".bmp");
+	             } else if(pic_type.equals("image/gif")){
+	                 file_ture_name = (file_ture_name+pic_num).concat(".gif");
+	             } else file_ture_name = (file_ture_name+pic_num).concat(".jpg");
+				
+				String realPath=request.getSession().getServletContext().getRealPath("/upload");
+				FileUtils.copyInputStreamToFile(myfile.getInputStream(), new File(realPath,file_ture_name));
+			}
+			System.out.println("当前时间："+systemTime);
+			pic_num++;
+		}
+		persons.put(person.getUsername(), person);  
+        return "redirect:/user/list.do"; 
+	}
 
 }

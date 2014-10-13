@@ -107,6 +107,7 @@ public class ClothesDAOImpl  implements IClothesDAO {
 		Query query=session.createQuery(hql);
 		
 		List<Clothes> list=query.list();
+		getFactory().closeSession();
 		
 		return list;
 	}
@@ -133,6 +134,7 @@ public class ClothesDAOImpl  implements IClothesDAO {
 		Transaction tx=session.beginTransaction();
 		String hql = "select count(*) from Clothes";
 		Query query = session.createQuery(hql);  
+		getFactory().closeSession();
 		
 		return ((Long)query.uniqueResult()).intValue();
 	}
