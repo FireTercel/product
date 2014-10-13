@@ -1,0 +1,17 @@
+table {
+	font-family: "ËÎÌו";
+	width: 400px;
+	border-collapse: collapse;
+}
+
+table td {
+	font-size: 16px;
+	border: 1px solid #000000;
+	padding: 3px 7px 2px 7px;
+}
+
+.t1 {
+	font-size: 20px;
+	text-align: center;
+	font-weight: bold;
+}

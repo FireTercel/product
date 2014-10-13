@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ include file="/common/top.jsp"%>
 
-<%-- <script type="text/javascript">
+<script type="text/javascript">
 function loadXMLDoc()
 {
 	var xmlhttp;
@@ -24,9 +24,16 @@ function loadXMLDoc()
 		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xmlhttp.send("fname=Bill&lname=Gates");
 	}
-</script> --%>
+</script>
+<body>
+
+
 	<div onmouseover="mOver(this)" onmouseout="mOut(this)"
 		style="background-color:green;width:120px;height:20px;padding:40px;color:#ffffff;">把鼠标移到上面</div>
+		
+	<h2>AJAX</h2>
+	<button id="ajax" type="button" onclick="loadXMLDoc()">请求数据</button>
+	<div id="myDiv"><h2>Let AJAX change this text</h2></div>
 
 	<form action="<%=request.getContextPath()%>/user/addpic.do" method="POST" enctype="multipart/form-data">  
     <table align="center">	
@@ -44,4 +51,4 @@ function loadXMLDoc()
 
 	<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/myScript.js"></script>
 </body>
-</html>
+<%@ include file="/common/bottom.jsp" %>
