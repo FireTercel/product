@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.metadata.ClassMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -17,6 +18,7 @@ import com.core.common.hibernate.qbc.CriteriaQuery;
 import com.core.common.hibernate.qbc.HqlQuery;
 import com.core.common.hibernate.qbc.PageList;
 import com.core.common.model.common.DBTable;
+import com.sun.corba.se.impl.orbutil.GetPropertyAction;
 
 /**
  * 类描述：DAO层泛型基类
@@ -31,14 +33,36 @@ public abstract class GenericBaseCommonDao<T,PK extends Serializable> implements
 	/**
 	 * 初始化Log4j的一个实例
 	 */
-	private static final Logger logger=Logger.getLogger(GenericBaseCommonDao.class);
-	
+	private static final Logger logger = Logger
+			.getLogger(GenericBaseCommonDao.class);
+
 	/**
-	 * 注入一个SessionFactory属性，并注入到父类（HibernateDaoSupport）
+	 * 注入一个SessionFactory属性
+	 * 并注入到父类（HibernateDaoSupport）
 	 */
 	@Autowired
 	@Qualifier("sessionFactory")
 	private SessionFactory sessionFactory;
+	
+	public Session getSession(){
+		// 事务必须是开启的(Required)，否则获取不到
+		return sessionFactory.getCurrentSession();
+	}
+	
+	/**
+	 * 获得该类的属性和类型
+	 * @param entityName
+	 * 注解的实体类
+	 */
+	private <T> void getProperty(Class entityName){
+		ClassMetadata cm=sessionFactory.getClassMetadata(entityName);
+		String [] str=cm.getPropertyNames();
+		for(int i=0;i<str.length;i++){
+			String property=str[i];
+			String type=cm.getPropertyType(property).getName();
+			com.core.util.LogUtil.info(property+"---&gt"+type);
+		}
+	}
 	
 	@Override
 	public List<DBTable> getAllDbTableName() {
@@ -122,7 +146,8 @@ public abstract class GenericBaseCommonDao<T,PK extends Serializable> implements
 
 	@Override
 	public <T> void updateEntitie(T pojo) {
-		// TODO Auto-generated method stub
+		getSession().update(pojo);
+		getSession().flush();
 
 	}
 
@@ -187,11 +212,6 @@ public abstract class GenericBaseCommonDao<T,PK extends Serializable> implements
 		return null;
 	}
 
-	@Override
-	public Session getSession() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public List findByExample(String entityName, Object exampleEntity) {

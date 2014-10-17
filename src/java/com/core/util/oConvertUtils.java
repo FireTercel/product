@@ -21,7 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 import com.sun.jndi.cosnaming.IiopUrl.Address;
 
 /**
- * 
+ * @description 数据类型转换类，提供多种数据转换方法；
+ * 		可以根据需要，将String类型转换为int、float、double等；
+ * 		同时提供编码方式转换；
  * @author 唐东宇
  *
  */
@@ -55,6 +57,13 @@ public class oConvertUtils {
 		return temp;
 	}
 	
+	/**
+	 * 将字符串，进行编码转换，ISO-8859-1转为GBK
+	 * @param strIn
+	 * @param sourceCode
+	 * @param targetCode
+	 * @return
+	 */
 	public static String StrToUTF(String strIn, String sourceCode, String targetCode) {
 		strIn = "";
 		try {
