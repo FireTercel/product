@@ -5,7 +5,7 @@ import java.util.List;
 import com.clothes.entity.User;
 
 
-public interface IUserDAO {
+public interface IUser {
 public boolean create(User users);
 	
 	public User queryUser(String id);

@@ -1,4 +1,4 @@
-package com.clothes.serviceImpl;
+package com.clothes.service.impl;
 
 import com.clothes.service.MainService;
 

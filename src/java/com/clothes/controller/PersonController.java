@@ -1,8 +1,6 @@
 package com.clothes.controller;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +25,7 @@ import com.mysql.jdbc.Driver;
  * @see 第二步：在####-servlet.xml中配置MultipartResolver处理器。可在此加入对上传文件的属性限制 
  * @see 第三步：在Controller的方法中添加MultipartFile参数。该参数用于接收表单中file组件的内容 
  * @see 第四步：编写前台表单。注意enctype="multipart/form-data"以及<input type="file" name="****"/> 
- * @author 唐东宇 
+ * @author 宏宇 
  * @create May 12, 2012 1:26:21 AM 
  */  
 @Controller  
@@ -50,7 +48,7 @@ public class PersonController {
 		return "user/list";
 	}
 	@RequestMapping(value="/add", method=RequestMethod.GET)  
-	public String addUser(){
+	public String addPerson(){
 		return "user/add";  
 		
 	}
@@ -77,7 +75,7 @@ public class PersonController {
         }  
         persons.put(person.getUsername(), person);  
         return "redirect:/user/list.do";  
-    }
+    }  
 	@RequestMapping(value="/addpic",method=RequestMethod.POST)
 	public String addPerson(Person person,@RequestParam MultipartFile[] myfiles,HttpServletRequest request,Driver driver) throws IOException{
 		int pic_num=1;

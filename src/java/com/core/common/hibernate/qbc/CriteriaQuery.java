@@ -7,7 +7,13 @@ import java.util.Map;
 
 import org.hibernate.criterion.DetachedCriteria;
 
-
+/**
+ * 
+ *类描述：CriteriaQuery类是对hibernate QBC查询方法的封装，需要的参数是当前操作的实体类。
+ *张代浩
+ *@date： 日期：2012-12-7 时间：上午10:22:15
+ *@version 1.0
+ */
 public class CriteriaQuery implements Serializable {
 	
 	public CriteriaQuery(){

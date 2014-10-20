@@ -1,4 +1,4 @@
-package com.clothes.daoImpl;
+package com.clothes.dao.impl;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -108,7 +108,7 @@ public class Test {
 	
 	public static void main(String[] args){
 		Test test=new Test();
-		test.getClothes();
+		test.createTable();
 	}
 	
 

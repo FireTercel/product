@@ -14,7 +14,7 @@ import org.apache.log4j.Priority;
 
 public class LogUtil {
 	
-	private static final String LOGCONFIG="log4j.properties";
+	private static final String LOGCONFIG="config/log4j/log4j.properties";
 	private static Logger objLog;
 	
 	private static Logger getLogger(){
