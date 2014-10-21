@@ -2,6 +2,11 @@ package com.clothes.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "clothimage", schema = "")
 public class ClothImage implements Serializable{
 	
 	/**

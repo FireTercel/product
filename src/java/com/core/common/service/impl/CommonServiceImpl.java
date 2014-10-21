@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +27,8 @@ import com.core.common.service.CommonService;
 @Transactional
 public class CommonServiceImpl implements CommonService {
 	
+	@Resource(name="commonDao")
 	public ICommonDao commonDao = null;
-	
 	
 
 	/**
@@ -42,7 +44,6 @@ public class CommonServiceImpl implements CommonService {
 		return commonDao.getAllDbTableSize();
 	}
 	
-	@Resource
 	public void setCommonDao(ICommonDao commonDao) {
 		this.commonDao = commonDao;
 	}

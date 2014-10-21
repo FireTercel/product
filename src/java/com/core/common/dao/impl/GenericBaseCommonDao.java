@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -54,9 +56,9 @@ public abstract class GenericBaseCommonDao<T,PK extends Serializable> implements
 	 * 注入一个SessionFactory属性
 	 * 并注入到父类（HibernateDaoSupport）
 	 */
-	@Autowired
-	@Qualifier("sessionFactory")
+	@Resource(name="sessionFactory")
 	private SessionFactory sessionFactory;
+	
 	
 	public Session getSession(){
 		// 事务必须是开启的(Required)，否则获取不到

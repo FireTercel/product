@@ -5,6 +5,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "clothes", schema = "")
 public class Clothes implements Serializable {
 
 	/**

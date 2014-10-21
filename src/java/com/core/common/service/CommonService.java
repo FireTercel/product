@@ -18,6 +18,8 @@ import com.core.common.model.common.UploadFile;
 
 public interface CommonService {
 	
+	
+	
 	/**
 	 * 获取所有数据库表
 	 * 
